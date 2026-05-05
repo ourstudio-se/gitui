@@ -1,0 +1,80 @@
+name: release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    name: build ${{ matrix.goos }}/${{ matrix.goarch }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - goos: linux
+            goarch: amd64
+          - goos: linux
+            goarch: arm64
+          - goos: darwin
+            goarch: amd64
+          - goos: darwin
+            goarch: arm64
+          - goos: windows
+            goarch: amd64
+            ext: .exe
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "1.26"
+          cache: true
+
+      - name: build
+        env:
+          GOOS: ${{ matrix.goos }}
+          GOARCH: ${{ matrix.goarch }}
+          CGO_ENABLED: "0"
+          VERSION: ${{ github.ref_name }}
+        run: |
+          mkdir -p dist
+          out="dist/git-tree-tui${{ matrix.ext }}"
+          go build -trimpath -ldflags "-s -w -X main.version=${VERSION}" -o "$out" .
+
+      - name: package
+        run: |
+          cd dist
+          base="git-tree-tui_${{ matrix.goos }}_${{ matrix.goarch }}"
+          if [ "${{ matrix.goos }}" = "windows" ]; then
+            zip "${base}.zip" "git-tree-tui${{ matrix.ext }}"
+            sha256sum "${base}.zip" > "${base}.zip.sha256"
+          else
+            tar czf "${base}.tar.gz" "git-tree-tui"
+            sha256sum "${base}.tar.gz" > "${base}.tar.gz.sha256"
+          fi
+          rm -f "git-tree-tui${{ matrix.ext }}"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dist-${{ matrix.goos }}-${{ matrix.goarch }}
+          path: dist/*
+
+  release:
+    name: publish release
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: dist
+          merge-multiple: true
+
+      - name: create release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist/*
+          generate_release_notes: true

@@ -1,0 +1,11 @@
+# compiled binary
+/git-tree-tui
+
+# build / release output
+/dist/
+
+# editor / OS
+.DS_Store
+.idea/
+.vscode/
+*.swp
