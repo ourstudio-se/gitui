@@ -5,6 +5,8 @@ actions and GitHub pipeline status baked in.
 
 ![gitui](https://img.shields.io/badge/go-1.26+-00ADD8?logo=go) ![bubbletea](https://img.shields.io/badge/tui-bubbletea-FF77AA)
 
+![gitui screenshot](docs/screenshot.png)
+
 ## Features
 
 - Topological commit graph with per-lane colour, current-branch highlight, and
