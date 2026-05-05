@@ -1,4 +1,4 @@
-module github.com/wayke-se/git-tree-tui
+module github.com/ourstudio-se/gitui
 
 go 1.26.0
 

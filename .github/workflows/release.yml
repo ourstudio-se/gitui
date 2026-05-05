@@ -42,21 +42,21 @@ jobs:
           VERSION: ${{ github.ref_name }}
         run: |
           mkdir -p dist
-          out="dist/git-tree-tui${{ matrix.ext }}"
+          out="dist/gitui${{ matrix.ext }}"
           go build -trimpath -ldflags "-s -w -X main.version=${VERSION}" -o "$out" .
 
       - name: package
         run: |
           cd dist
-          base="git-tree-tui_${{ matrix.goos }}_${{ matrix.goarch }}"
+          base="gitui_${{ matrix.goos }}_${{ matrix.goarch }}"
           if [ "${{ matrix.goos }}" = "windows" ]; then
-            zip "${base}.zip" "git-tree-tui${{ matrix.ext }}"
+            zip "${base}.zip" "gitui${{ matrix.ext }}"
             sha256sum "${base}.zip" > "${base}.zip.sha256"
           else
-            tar czf "${base}.tar.gz" "git-tree-tui"
+            tar czf "${base}.tar.gz" "gitui"
             sha256sum "${base}.tar.gz" > "${base}.tar.gz.sha256"
           fi
-          rm -f "git-tree-tui${{ matrix.ext }}"
+          rm -f "gitui${{ matrix.ext }}"
 
       - uses: actions/upload-artifact@v4
         with:

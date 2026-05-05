@@ -1,9 +1,9 @@
-# git-tree-tui
+# gitui
 
 A terminal UI for browsing your git history as a coloured tree, with branch
 actions and GitHub pipeline status baked in.
 
-![git-tree-tui](https://img.shields.io/badge/go-1.26+-00ADD8?logo=go) ![bubbletea](https://img.shields.io/badge/tui-bubbletea-FF77AA)
+![gitui](https://img.shields.io/badge/go-1.26+-00ADD8?logo=go) ![bubbletea](https://img.shields.io/badge/tui-bubbletea-FF77AA)
 
 ## Features
 
@@ -34,14 +34,14 @@ actions and GitHub pipeline status baked in.
 ### Pre-built binary
 
 Grab a release from the
-[Releases page](https://github.com/wayke-se/git-tree-tui/releases) and put it
-on your `PATH`:
+[Releases page](https://github.com/ourstudio-se/gitui/releases) and put it on
+your `PATH`:
 
 ```sh
 # macOS arm64 example
-curl -L https://github.com/wayke-se/git-tree-tui/releases/latest/download/git-tree-tui_darwin_arm64.tar.gz \
+curl -L https://github.com/ourstudio-se/gitui/releases/latest/download/gitui_darwin_arm64.tar.gz \
   | tar xz
-sudo mv git-tree-tui /usr/local/bin/
+sudo mv gitui /usr/local/bin/
 ```
 
 ### From source
@@ -49,26 +49,26 @@ sudo mv git-tree-tui /usr/local/bin/
 Requires Go 1.26+:
 
 ```sh
-go install github.com/wayke-se/git-tree-tui@latest
+go install github.com/ourstudio-se/gitui@latest
 ```
 
 Or clone and build:
 
 ```sh
-git clone https://github.com/wayke-se/git-tree-tui
-cd git-tree-tui
-go build -o git-tree-tui .
+git clone git@github.com:ourstudio-se/gitui.git
+cd gitui
+go build -o gitui .
 ```
 
 ## Usage
 
 ```sh
-git-tree-tui                    # current directory
-git-tree-tui --repo path/to/repo
-git-tree-tui --n 1000           # show up to 1000 commits (default 500)
-git-tree-tui --refresh 10       # refresh interval in seconds (default 5)
-git-tree-tui --no-icons         # disable nerd-font glyphs
-git-tree-tui --dump             # render graph to stdout, no TUI
+gitui                    # current directory
+gitui --repo path/to/repo
+gitui --n 1000           # show up to 1000 commits (default 500)
+gitui --refresh 10       # refresh interval in seconds (default 5)
+gitui --no-icons         # disable nerd-font glyphs
+gitui --dump             # render graph to stdout, no TUI
 ```
 
 ### Keys

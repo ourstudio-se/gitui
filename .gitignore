@@ -1,4 +1,5 @@
 # compiled binary
+/gitui
 /git-tree-tui
 
 # build / release output
